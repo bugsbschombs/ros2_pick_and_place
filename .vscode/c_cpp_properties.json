@@ -1,0 +1,52 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/hci/project/franka_ws/install/velocity_controllers/include/**",
+        "/home/hci/project/franka_ws/install/tricycle_steering_controller/include/**",
+        "/home/hci/project/franka_ws/install/tricycle_controller/include/**",
+        "/home/hci/project/franka_ws/install/bicycle_steering_controller/include/**",
+        "/home/hci/project/franka_ws/install/ackermann_steering_controller/include/**",
+        "/home/hci/project/franka_ws/install/steering_controllers_library/include/**",
+        "/home/hci/project/franka_ws/install/position_controllers/include/**",
+        "/home/hci/project/franka_ws/install/joint_trajectory_controller/include/**",
+        "/home/hci/project/franka_ws/install/imu_sensor_broadcaster/include/**",
+        "/home/hci/project/franka_ws/install/franka_hardware/include/**",
+        "/home/hci/project/franka_ws/install/franka_example_controllers/include/**",
+        "/home/hci/project/franka_ws/install/franka_msgs/include/**",
+        "/home/hci/project/franka_ws/install/effort_controllers/include/**",
+        "/home/hci/project/franka_ws/install/forward_command_controller/include/**",
+        "/home/hci/project/franka_ws/install/force_torque_sensor_broadcaster/include/**",
+        "/home/hci/project/franka_ws/install/diff_drive_controller/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/hci/project/franka_ws/src/franka_ros2/franka_example_controllers/include/**",
+        "/home/hci/project/franka_ws/src/franka_ros2/franka_gripper/include/**",
+        "/home/hci/project/franka_ws/src/franka_ros2/franka_hardware/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/ackermann_steering_controller/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/bicycle_steering_controller/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/diff_drive_controller/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/effort_controllers/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/force_torque_sensor_broadcaster/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/forward_command_controller/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/imu_sensor_broadcaster/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/joint_trajectory_controller/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/position_controllers/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/steering_controllers_library/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/tricycle_controller/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/tricycle_steering_controller/include/**",
+        "/home/hci/project/franka_ws/src/ros2_controllers/velocity_controllers/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

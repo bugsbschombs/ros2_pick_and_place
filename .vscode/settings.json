@@ -1,0 +1,24 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/hci/project/franka_ws/install/rqt_joint_trajectory_controller/lib/python3.10/site-packages",
+        "/home/hci/project/franka_ws/install/ros2_controllers_test_nodes/lib/python3.10/site-packages",
+        "/home/hci/project/franka_ws/install/my_franka_emika/lib/python3.10/site-packages",
+        "/home/hci/project/franka_ws/install/franka_gripper/local/lib/python3.10/dist-packages",
+        "/home/hci/project/franka_ws/install/franka_msgs/local/lib/python3.10/dist-packages",
+        "/home/hci/ros2_ws/build/franka_emika_controller",
+        "/home/hci/ros2_ws/install/franka_emika_controller/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/hci/project/franka_ws/install/rqt_joint_trajectory_controller/lib/python3.10/site-packages",
+        "/home/hci/project/franka_ws/install/ros2_controllers_test_nodes/lib/python3.10/site-packages",
+        "/home/hci/project/franka_ws/install/my_franka_emika/lib/python3.10/site-packages",
+        "/home/hci/project/franka_ws/install/franka_gripper/local/lib/python3.10/dist-packages",
+        "/home/hci/project/franka_ws/install/franka_msgs/local/lib/python3.10/dist-packages",
+        "/home/hci/ros2_ws/build/franka_emika_controller",
+        "/home/hci/ros2_ws/install/franka_emika_controller/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}
