@@ -50,7 +50,7 @@ def generate_launch_description():
             description='Hostname or IP address of the robot.'),
         DeclareLaunchArgument(
             use_rviz_parameter_name,
-            default_value='true',
+            default_value='false',
             description='Visualize the robot in Rviz'),
         DeclareLaunchArgument(
             use_fake_hardware_parameter_name,
@@ -117,9 +117,10 @@ def generate_launch_description():
              executable='rviz2',
              name='rviz2',
              arguments=['--display-config', rviz_file],
-             condition=IfCondition(use_rviz)
-             )
-,
+            condition=IfCondition(use_rviz)
+             ),
+
+   
         Node(
             package='my_franka_emika',
             executable='trajectory_publisher',
