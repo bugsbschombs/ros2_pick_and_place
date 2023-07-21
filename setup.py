@@ -21,7 +21,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "trajectory_publisher = my_franka_emika.trajectory_publisher:main"
+            "trajectory_publisher = my_franka_emika.trajectory_publisher:main",
+            "gripper_publisher = my_franka_emika.gripper_controller:main",
+            "app = my_franka_emika.app:main",
+            "image_publisher = my_franka_emika.image_publisher:main"
         ],
     },
 )

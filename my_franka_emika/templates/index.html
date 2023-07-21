@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Fill Screen</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+    </style>
+    <script>
+        function changeImage() {
+            var newImage = document.getElementById('new-image').value;
+            var image = document.getElementById('image');
+            image.src = '/static/' + newImage;
+        }
+        function timedRefresh(timeoutPeriod) {
+	        setTimeout("location.reload(true);",timeoutPeriod);
+        }
+        window.onload = timedRefresh(5000);
+    </script>
+    
+</head>
+<body>
+
+    <img id="image" src="/static/{{ new_image or 'image.png' }}" alt="Image Fill Screen">
+</body>
+</html>

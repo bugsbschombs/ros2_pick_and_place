@@ -92,18 +92,19 @@ def generate_launch_description():
             },
             on_exit=Shutdown(),
         ),
-        Node(
-            package='controller_manager',
-            executable='spawner',
-            arguments=['joint_state_broadcaster'],  
-            output='screen',
-        ),
-        Node(
-            package='controller_manager',
-            executable='spawner',
-            arguments=['joint_trajectory_controller'],  
-            output='screen',
-        ),
+        #Node(
+        #    package='controller_manager',
+        #    executable='spawner',
+        #    arguments=['joint_state_broadcaster'],  
+        #    output='screen',
+        #),
+        #Node(
+        #    package='controller_manager',
+        #    executable='spawner',
+        #    arguments=['joint_trajectory_controller'],  
+        #    output='screen',
+        #    on_exit=Shutdown(),
+        #),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([PathJoinSubstitution(
                 [FindPackageShare('franka_gripper'), 'launch', 'gripper.launch.py'])]),
@@ -125,6 +126,14 @@ def generate_launch_description():
             package='my_franka_emika',
             executable='trajectory_publisher',
             name='trajectory_publisher',
+            output='screen'
+            ),
+
+   
+        Node(
+            package='my_franka_emika',
+            executable='app',
+            name='app',
             output='screen'
             )
 	

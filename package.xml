@@ -22,7 +22,8 @@
   
   <exec_depend>panda_description</exec_depend>
   <exec_depend>panda_moveit_config</exec_depend>
-
+  <exec_depend>franka_gripper</exec_depend>
+  <exec_depend>franka_msgs</exec_depend>
   
 
   <test_depend>ament_copyright</test_depend>
