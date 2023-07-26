@@ -50,7 +50,7 @@ def generate_launch_description():
             description='Hostname or IP address of the robot.'),
         DeclareLaunchArgument(
             use_rviz_parameter_name,
-            default_value='false',
+            default_value='true',      # this was false by default
             description='Visualize the robot in Rviz'),
         DeclareLaunchArgument(
             use_fake_hardware_parameter_name,
@@ -66,6 +66,7 @@ def generate_launch_description():
             default_value='true',
             description='Use Franka Gripper as an end-effector, otherwise, the robot is loaded '
                         'without an end-effector.'),
+
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
@@ -92,19 +93,22 @@ def generate_launch_description():
             },
             on_exit=Shutdown(),
         ),
-        #Node(
-        #    package='controller_manager',
-        #    executable='spawner',
-        #    arguments=['joint_state_broadcaster'],  
-        #    output='screen',
-        #),
-        #Node(
+
+        Node(
+           package='controller_manager',
+           executable='spawner',
+           arguments=['joint_state_broadcaster'],  
+           output='screen',
+        ),
+
+        # Node(
         #    package='controller_manager',
         #    executable='spawner',
         #    arguments=['joint_trajectory_controller'],  
         #    output='screen',
         #    on_exit=Shutdown(),
-        #),
+        # ),
+
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([PathJoinSubstitution(
                 [FindPackageShare('franka_gripper'), 'launch', 'gripper.launch.py'])]),
@@ -122,20 +126,29 @@ def generate_launch_description():
              ),
 
    
-        Node(
-            package='my_franka_emika',
-            executable='trajectory_publisher',
-            name='trajectory_publisher',
-            output='screen'
-            ),
+        # Node(
+        #     package='my_franka_emika',
+        #     executable='trajectory_publisher',
+        #     name='trajectory_publisher',
+        #     output='screen'
+        #     ),
 
    
+        # Node(
+        #     package='my_franka_emika',
+        #     executable='app',
+        #     name='app',
+        #     output='screen'
+        #     ),
+
         Node(
             package='my_franka_emika',
-            executable='app',
-            name='app',
+            executable='image_publisher',
+            name='image_publisher',
             output='screen'
             )
+
+
 	
 
     ])

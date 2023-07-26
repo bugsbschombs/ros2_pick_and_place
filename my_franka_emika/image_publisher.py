@@ -43,17 +43,20 @@ class ImagePublisher(Node):
             img_msg.data = img_dict["u10"]
             self.publisher_.publish(img_msg)
             self.get_logger().info(" -----------> Publishing image2.jpg \n")
+        
+        if self.image_flag == 2:
+            # publish image via app
+            img_msg = String()
+            img_msg.data = img_dict["u10"]
+            self.publisher_.publish(img_msg)
+            self.get_logger().info(" -----------> Publishing image2.jpg \n")
 
 
     def flag_callback(self, msg):
         
         flag = msg.flag
         self.get_logger().info('I heard: "%d"' % flag)
-
-        if flag == 0:
-            self.image_flag = 0
-        if flag == 1:
-            self.image_flag = 1
+        self.image_flag = flag
 
 
 
