@@ -7,10 +7,14 @@ from std_msgs.msg import String
 from rclpy.action import ActionClient
 from franka_msgs.action import Grasp, Homing, Move
 from time import sleep
-
 from math import floor
 
-from tutorial_interfaces.msg import Flag 
+import csv
+
+
+
+
+from tutorial_interfaces.msg import Flag, MyConfig
 
 
 GIGA = 1e9
@@ -40,20 +44,36 @@ TJ2 = {
 
 
 # tjs_list =  [TJ1, TJ2, TJ3, TJ4, TJ5, TJ6, TJ7, TJ8, TJ9, TJ10]
-tjs_list =  [TJ1, TJ2]
+tjs_list =  [TJ2, TJ1]
 
-#uncertainty = 
 
-box_ids = [1, 2]   # this is size 2
-# box_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]   # this is size 10
+
+###########################   Config 
+# participant  'P1' # Expected P1, P2  
+participant = 0
+
+# modality
+modality = 'GUI'
+
+# session
+session = 0
+
+# box ids
+current_box = 1
+max_number_of_boxes  = len(tjs_list)
+
+# uncertainty leve
+uncertaintylevel = 'no'
+
 
 # three uncertainty conditions
 uncertainties_low = [8,12,14,7,7,5,9,46,45]  # this is size 10
 uncertainties_high = [71,98,75,62,96,83,22,52,46,45]
 uncertainties_no = [0,0,0,0,0,0,0,0,0,0]
 
+current_uncertainty_level = uncertainties_low
 
-curr_box_id = 1
+
 
 
 
@@ -65,6 +85,7 @@ class TrajectoryPublisher(Node):
     def __init__(self):
 
         super().__init__('trajectory_publisher')
+        self.subscriber_config = self.create_subscription(MyConfig,'myconfig',self.setup_expe_config ,10)
 
         self.publisher_arm = self.create_publisher(JointTrajectory, '/joint_trajectory_controller/joint_trajectory', 10)
         self.subscription = self.create_subscription(String,'go',self.callback,10)
@@ -74,7 +95,41 @@ class TrajectoryPublisher(Node):
 
         # self.publisher_app = self.create_publisher(String, '/image_name', 4)
 
-        self.publisher_app = self.create_publisher(Flag, 'image_flag', 4)
+        self.publisher_app = self.create_publisher(Flag, 'image_flag', 4) 
+
+
+    def setup_expe_config(self,msg):
+        self.get_logger().info('******************* GOT CONFIG')
+        current_config = msg
+        current_box = current_config.box
+        uncertaintylevel = current_config.uncertaintylevel
+        if(uncertaintylevel == 'no'):
+            current_uncertainty_level = uncertainties_no
+        elif (uncertaintylevel == 'low'):
+            current_uncertainty_level = uncertainties_low
+        elif (uncertaintylevel == 'high'):
+            current_uncertainty_level = uncertainties_high
+
+
+        ### TODO particpant
+
+        ### session
+
+        ### modality
+        modality = current_config.modality
+
+
+        with open('logging.csv', 'w+', newline='') as file:
+            fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            self.get_logger().info('******************* CSV WRITER')
+
+            writer.writeheader()
+            writer.writerow({'participant': participant, 'modality': modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
+            file.close()
+
+        return
+
 
 
     def get_wait_time(self, uncertainty):
@@ -141,12 +196,12 @@ class TrajectoryPublisher(Node):
 
 
     ######################################## THE IMPORTANT FUNCTION RIGHT HERE ########################################
-    def publish_trajectory(self, box_id):
+    def publish_trajectory(self):
         
         # get the current trajectory and uncertainty using the input box_id
-        current_trj = tjs_list[box_id - 1]
-        un = uncertainties_low[box_id - 1]
-        image_flag = box_id
+        current_trj = tjs_list[current_box - 1]
+        un = current_uncertainty_level[current_box - 1]
+        image_flag = current_box
 
         # get the wait times based on the uncertainty
         pick_hover_wait_time = self.get_wait_time(un)
@@ -238,14 +293,6 @@ class TrajectoryPublisher(Node):
             sleep(1)
 
 
-        # #publish image via app
-        # img_msg = String()
-        # img_msg.data  = img_dict["u10"]
-        # # print(" -----------> Sending image \n")
-        # self.publisher_app.publish(img_msg)
-        # self.get_logger().info(" -----------> Image published & sleeping for 8 seconds\n")
-        # sleep(8)
-
             #publish image via app
         flag_msg = Flag()
         flag_msg.flag = image_flag
@@ -320,39 +367,38 @@ class TrajectoryPublisher(Node):
         # sleep(8)
 
 
+        with open('logging.csv', 'w+', newline='') as file:
+            fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            self.get_logger().info('******************* CSV WRITER')
+
+            writer.writeheader()
+            writer.writerow({'participant': participant, 'modality': modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
+            file.close()
+
+
 
 def main(args=None):
 
     rclpy.init(args=args)
     trajectory_publisher = TrajectoryPublisher()
+    rclpy.spin_once(trajectory_publisher)
     
-
+    sleep(3)
     # Iterative interface
-    for box_id in box_ids:
-
+    for box_id in range(current_box,max_number_of_boxes):
+        trajectory_publisher.get_logger().info("*****CURRENT BOX: #%d "% box_id)
         signal = str(input("Current target is box #%d. Enter 'g' to start: " % box_id))
         if signal == 'g':
             print("running the publish_trajectory function now!")
-            trajectory_publisher.publish_trajectory(box_id)
+            trajectory_publisher.publish_trajectory()
             print("Finished running for box_id #%d" % box_id)
 
 
-    # # While it is running
-    # while rclpy.ok():
-
-    #     curr_box_id = int(input("Please enter the box_id to grasp: "))
-
-    #     print("running the publish_trajectory function towards box_id #%d!" % curr_box_id)
-    #     trajectory_publisher.publish_trajectory(curr_box_id)
-    #     print("Finished running for box_id #%d" % curr_box_id)
-
-    
-    #rclpy.spin_until_future_complete(action_client, future)
-    # rclpy.spin_once(trajectory_publisher)
-    # rclpy.spin(trajectory_publisher)
 
 
     trajectory_publisher.destroy_node()
+    
     rclpy.shutdown()
 
 #if you are executing the script directly through terminal: (otherwise comment out)

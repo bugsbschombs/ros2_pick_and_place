@@ -9,6 +9,7 @@
 
   <depend>rclpy</depend>
 
+
   <!--exec_depend copied from franka.launch.py-->
   <exec_depend>franka_description</exec_depend>
   <exec_depend>franka_hardware</exec_depend>
@@ -19,7 +20,7 @@
   <exec_depend>rviz2</exec_depend>
   <exec_depend>xacro</exec_depend>
   <exec_depend>ros2launch</exec_depend>
-  
+  <exec_depend>tutorial_interfaces</exec_depend>
   <exec_depend>panda_description</exec_depend>
   <exec_depend>panda_moveit_config</exec_depend>
   <exec_depend>franka_gripper</exec_depend>
