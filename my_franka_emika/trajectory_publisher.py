@@ -44,7 +44,7 @@ TJ2 = {
 
 
 # tjs_list =  [TJ1, TJ2, TJ3, TJ4, TJ5, TJ6, TJ7, TJ8, TJ9, TJ10]
-tjs_list =  [TJ2, TJ1]
+tjs_list =  [TJ1, TJ2]
 
 
 
@@ -53,16 +53,16 @@ tjs_list =  [TJ2, TJ1]
 participant = 0
 
 # modality
-modality = 'GUI'
+# modality = 'holder'
 
 # session
 session = 0
 
 # box ids
-current_box = 1
-max_number_of_boxes  = len(tjs_list)
+current_box = 0
+max_number_of_boxes = len(tjs_list)
 
-# uncertainty leve
+# uncertainty level
 uncertaintylevel = 'no'
 
 
@@ -97,10 +97,16 @@ class TrajectoryPublisher(Node):
 
         self.publisher_app = self.create_publisher(Flag, 'image_flag', 4) 
 
+        self.times = []
+
+
 
     def setup_expe_config(self,msg):
+
         self.get_logger().info('******************* GOT CONFIG')
         current_config = msg
+        
+        #config current_box
         current_box = current_config.box
         uncertaintylevel = current_config.uncertaintylevel
         if(uncertaintylevel == 'no'):
@@ -111,12 +117,19 @@ class TrajectoryPublisher(Node):
             current_uncertainty_level = uncertainties_high
 
 
-        ### TODO particpant
+        ### particpant
+
+
 
         ### session
 
         ### modality
-        modality = current_config.modality
+        print(type(current_config.modality))
+        print(current_config.modality)
+
+        self.modality = current_config.modality
+
+
 
 
         with open('logging.csv', 'w+', newline='') as file:
@@ -125,7 +138,7 @@ class TrajectoryPublisher(Node):
             self.get_logger().info('******************* CSV WRITER')
 
             writer.writeheader()
-            writer.writerow({'participant': participant, 'modality': modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
+            writer.writerow({'participant': participant, 'modality': self.modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
             file.close()
 
         return
@@ -133,15 +146,15 @@ class TrajectoryPublisher(Node):
 
 
     def get_wait_time(self, uncertainty):
-        a = 0.08
-        b = 2
+        a = 0.05
+        b = 1
         wait_time = a * uncertainty + b
         return wait_time
     
 
     def get_travel_time(self, uncertainty):
         a = 0.06
-        b = 8
+        b = 6
         wait_time = a * uncertainty + b
         return wait_time
         
@@ -198,10 +211,10 @@ class TrajectoryPublisher(Node):
     ######################################## THE IMPORTANT FUNCTION RIGHT HERE ########################################
     def publish_trajectory(self):
         
-        # get the current trajectory and uncertainty using the input box_id
-        current_trj = tjs_list[current_box - 1]
-        un = current_uncertainty_level[current_box - 1]
-        image_flag = current_box
+        # get the current config 
+        current_trj = tjs_list[current_box]
+        un = current_uncertainty_level[current_box]
+        image_flag = 1
 
         # get the wait times based on the uncertainty
         pick_hover_wait_time = self.get_wait_time(un)
@@ -217,164 +230,326 @@ class TrajectoryPublisher(Node):
         trajectory_msg = JointTrajectory()
         trajectory_msg.joint_names = ['panda_joint1', 'panda_joint2', 'panda_joint3', 'panda_joint4', 'panda_joint5', 'panda_joint6', 'panda_joint7']
 
-        # ******* 1. round ******
 
-        # Create home position as first trajectory point
-        # position0 = home position + Gripper OPEN
-        point_home = JointTrajectoryPoint()
-        point_home.positions = current_trj["home"]
-        point_home.time_from_start.sec = 6          # this was 6
-        point_home.time_from_start.nanosec = 0
-        
-        # pick-up movement: Hover above bottle (gripper open) - go down pick up (gripper closed) - go back to hover (gripper closed)
-        # position1_pick_hover + Gripper OPEN
-        point_pick_hover = JointTrajectoryPoint()
-        point_pick_hover.positions = current_trj["pick_hover"]
-        point_pick_hover.time_from_start.sec = 8        # this was 8
-        point_pick_hover.time_from_start.nanosec = 0
-
-        # 1_pick_down_close  + Gripper CLOSED
-        point_pick = JointTrajectoryPoint()
-        point_pick.positions = current_trj["pick_down"]
-        point_pick.time_from_start.sec = 2        # this was 2
-        point_pick.time_from_start.nanosec = 0
-
-        # position1_pick_hover + Gripper CLOSED
-        point_pick_hover2 = JointTrajectoryPoint()
-        point_pick_hover2.positions = point_pick_hover.positions
-        point_pick_hover2.time_from_start.sec = 2        # this was 2
-        point_pick_hover2.time_from_start.nanosec = 0
-
-        # Place-Movement
-
-        # Position_place_hover + Gripper OPEN
-        point_place_hover = JointTrajectoryPoint()
-        point_place_hover.positions = current_trj["place_hover"]
-        point_place_hover.time_from_start.sec = travel_time_s     # this was without -2 seconds
-        point_place_hover.time_from_start.nanosec = travel_time_ns
-
-        # Position_place + Gripper OPEN
-        point_place = JointTrajectoryPoint()
-        point_place.positions = current_trj["place_down"]
-        point_place.time_from_start.sec = 3        # this was 4
-        point_place.time_from_start.nanosec = 0
-
-        # Back to home position + Gripper OPEN
-        point_home2 = JointTrajectoryPoint()
-        point_home2.positions = point_home.positions
-        point_home2.time_from_start.sec = 8        # this was 8
-        point_home2.time_from_start.nanosec = 0
+        print("=" * 100)
+        print("\n")
+        print("The current modality is %s" % self.modality)
+        print("\n")
+        print("=" * 100)
 
 
-        # ***** End of trajectory points
-        #self.get_logger().info('Waiting for the /go signal !!!!!!----------------------------------------')
+        ####################################################################################################
+        if self.modality == 'GUI':
 
-        # the "go" class variable is set to True here, go time!
-        #if self.go:
+            # ******* Start ******
+            # Create home position as first trajectory point
+            # position0 = home position + Gripper OPEN
+            point_home = JointTrajectoryPoint()
+            point_home.positions = current_trj["home"]
+            point_home.time_from_start.sec = 6          # this was 6
+            point_home.time_from_start.nanosec = 0
+            
+            # pick-up movement: Hover above bottle (gripper open) - go down pick up (gripper closed) - go back to hover (gripper closed)
+            # position1_pick_hover + Gripper OPEN
+            point_pick_hover = JointTrajectoryPoint()
+            point_pick_hover.positions = current_trj["pick_hover"]
+            point_pick_hover.time_from_start.sec = 6        # this was 8
+            point_pick_hover.time_from_start.nanosec = 0
 
-        # Publish the trajectory
-        self.get_logger().info('Published trajectory.----------------------------------------')
+            # 1_pick_down_close  + Gripper CLOSED
+            point_pick = JointTrajectoryPoint()
+            point_pick.positions = current_trj["pick_down"]
+            point_pick.time_from_start.sec = 2        # this was 2
+            point_pick.time_from_start.nanosec = 0
+
+            # position1_pick_hover + Gripper CLOSED
+            point_pick_hover2 = JointTrajectoryPoint()
+            point_pick_hover2.positions = point_pick_hover.positions
+            point_pick_hover2.time_from_start.sec = 2        # this was 2
+            point_pick_hover2.time_from_start.nanosec = 0
+
+            # Place-Movement
+
+            # Position_place_hover + Gripper OPEN
+            point_place_hover = JointTrajectoryPoint()
+            point_place_hover.positions = current_trj["place_hover"]
+            point_place_hover.time_from_start.sec = 8    # NOT travel_time_s
+            point_place_hover.time_from_start.nanosec = 0   # NOT travel_time_s
+
+            # Position_place + Gripper OPEN
+            point_place = JointTrajectoryPoint()
+            point_place.positions = current_trj["place_down"]
+            point_place.time_from_start.sec = 3        # this was 4
+            point_place.time_from_start.nanosec = 0
+
+            # Back to home position + Gripper OPEN
+            point_home2 = JointTrajectoryPoint()
+            point_home2.positions = point_home.positions
+            point_home2.time_from_start.sec = 8        # this was 8
+            point_home2.time_from_start.nanosec = 0
+
+            # ***** End of trajectory points
+
+
+
+            #****************** Trajectory START ***********************************************
+            
+
+            #self.get_logger().info('Waiting for the /go signal !!!!!!----------------------------------------')
+
+            # the "go" class variable is set to True here, go time!
+            #if self.go:
+
+            # Publish the trajectory
+            self.get_logger().info('Published trajectory.----------------------------------------')
 
             # Add the trajectory points to the trajectory message
-        trajectory_msg.points.append(point_home)
-        self.publish_with_checking(trajectory_msg)
-        self.get_logger().info(" -----------> Going to home & sleeping for 6 seconds\n")
-        for i in range(6):
-            print("Sleeping for %d out of 6 seconds" % int(i+1))
-            sleep(1)
+            trajectory_msg.points.append(point_home)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to home & sleeping for 6 seconds\n")
+            for i in range(6):
+                print("Sleeping for %d out of 6 seconds" % int(i+1))
+                sleep(1)
 
-        # print(" -----------> Want to go to pick hover\n")
-        trajectory_msg.points.clear()
-        trajectory_msg.points.append(point_pick_hover)
-        self.publish_with_checking(trajectory_msg)
-        self.get_logger().info(" -----------> Going to pick hover & sleeping for 8 seconds\n")
-        for i in range(8):
-            print("Sleeping for %d out of 8 seconds" % int(i+1))
-            sleep(1)
+            # print(" -----------> Want to go to pick hover\n")
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_pick_hover)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to pick hover & sleeping for 6 seconds\n")
+            for i in range(6):
+                print("Sleeping for %d out of 6 seconds" % int(i+1))
+                sleep(1)
 
 
             #publish image via app
-        flag_msg = Flag()
-        flag_msg.flag = image_flag
-        # print(" -----------> Sending image \n")
-        self.publisher_app.publish(flag_msg)
-        self.get_logger().info(" -----------> Image requested & sleeping for %.3f seconds\n" % pick_hover_wait_time)
-        sleep(pick_hover_wait_time)
+            flag_msg = Flag()
+            flag_msg.flag = image_flag
+            # print(" -----------> Sending image \n")
+            self.publisher_app.publish(flag_msg)
+            self.get_logger().info(" -----------> Image requested & sleeping for 2 seconds\n") # NOT% pick_hover_wait_time
+            sleep(2) # NOT sleep(pick_hover_wait_time)
 
 
-        trajectory_msg.points.clear()
-        trajectory_msg.points.append(point_pick)
-        # print(" -----------> Going to point pick\n")
-        self.publish_with_checking(trajectory_msg)
-        self.get_logger().info(" -----------> Going to point pick & sleeping for 3 seconds\n")
-        for i in range(3):
-            print("Sleeping for %d out of 3 seconds" % int(i+1))
-            sleep(1)
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_pick)
+            # print(" -----------> Going to point pick\n")
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to point pick & sleeping for 2 seconds\n")
+            for i in range(2):
+                print("Sleeping for %d out of 2 seconds" % int(i+1))
+                sleep(1)
 
 
-        # self.open_gripper()
-        # sleep(8)
-
-        # Gripper closed
-        self.close_gripper()
-        sleep(8)
+            # Gripper closed
+            self.close_gripper()
+            sleep(3)
 
 
-        trajectory_msg.points.clear()
-        trajectory_msg.points.append(point_pick_hover2)
-        self.publish_with_checking(trajectory_msg)
-        self.get_logger().info(" -----------> Going to pick hover 2 & sleeping for 3 seconds\n")
-        for i in range(3):
-            print("Sleeping for %d out of 3 seconds" % int(i+1))
-            sleep(1)
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_pick_hover2)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to pick hover 2 & sleeping for 2 seconds\n")
+            for i in range(2):
+                print("Sleeping for %d out of 2 seconds" % int(i+1))
+                sleep(1)
 
 
-        trajectory_msg.points.clear()
-        trajectory_msg.points.append(point_place_hover)
-        self.publish_with_checking(trajectory_msg)
-        self.get_logger().info(" -----------> Going to place hover 2 & sleeping for %.3f seconds\n" % travel_time)
-        sleep(travel_time)
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_place_hover)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to place hover & sleeping for 8 seconds\n")
+            sleep(8)
 
 
-        trajectory_msg.points.clear()
-        trajectory_msg.points.append(point_place)
-        self.publish_with_checking(trajectory_msg)
-        self.get_logger().info(" -----------> Going to point place & sleeping for 4 seconds\n")
-        for i in range(4):
-            print("Sleeping for %d out of 4 seconds" % int(i+1))
-            sleep(1)
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_place)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to point place & sleeping for 4 seconds\n")
+            for i in range(4):
+                print("Sleeping for %d out of 4 seconds" % int(i+1))
+                sleep(1)
 
 
-        #Gripper OPEN
-        self.open_gripper()
-        sleep(8)
+            #Gripper OPEN
+            self.open_gripper()
+            sleep(3)
 
 
-        # change the image flag
-        flag_msg = Flag()
-        flag_msg.flag = 0       #### 0 = change image back to default
-        # print(" -----------> Sending image \n")
-        self.publisher_app.publish(flag_msg)
-        self.get_logger().info(" -----------> Image stopped & sleeping for 8 seconds\n")
-        # sleep(8)
+            # change the image flag
+            flag_msg = Flag()
+            flag_msg.flag = 0       #### 0 = change image back to default
+            # print(" -----------> Sending image \n")
+            self.publisher_app.publish(flag_msg)
+            self.get_logger().info(" -----------> Image stopped & sleeping for 8 seconds\n")
+            # sleep(8)
 
-        #self.open_gripper()
-
-
-        trajectory_msg.points.clear()
-        trajectory_msg.points.append(point_home2)
-        self.publish_with_checking(trajectory_msg)
-        # sleep(8)
+            
 
 
-        with open('logging.csv', 'w+', newline='') as file:
-            fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            self.get_logger().info('******************* CSV WRITER')
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_home2)
+            self.publish_with_checking(trajectory_msg)
+            # sleep(1)
 
-            writer.writeheader()
-            writer.writerow({'participant': participant, 'modality': modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
-            file.close()
+
+            with open('logging.csv', 'w+', newline='') as file:
+                fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                self.get_logger().info('******************* CSV WRITER')
+
+                writer.writeheader()
+                writer.writerow({'participant': participant, 'modality': self.modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
+                file.close()
+
+
+
+        ####################################################################################################
+        else:
+
+            # ******* Start ******
+                   # Create home position as first trajectory point
+            # position0 = home position + Gripper OPEN
+            point_home = JointTrajectoryPoint()
+            point_home.positions = current_trj["home"]
+            point_home.time_from_start.sec = 6          # this was 6
+            point_home.time_from_start.nanosec = 0
+            
+            # pick-up movement: Hover above bottle (gripper open) - go down pick up (gripper closed) - go back to hover (gripper closed)
+            # position1_pick_hover + Gripper OPEN
+            point_pick_hover = JointTrajectoryPoint()
+            point_pick_hover.positions = current_trj["pick_hover"]
+            point_pick_hover.time_from_start.sec = 8        # this was 8
+            point_pick_hover.time_from_start.nanosec = 0
+
+            # 1_pick_down_close  + Gripper CLOSED
+            point_pick = JointTrajectoryPoint()
+            point_pick.positions = current_trj["pick_down"]
+            point_pick.time_from_start.sec = 2        # this was 2
+            point_pick.time_from_start.nanosec = 0
+
+            # position1_pick_hover + Gripper CLOSED
+            point_pick_hover2 = JointTrajectoryPoint()
+            point_pick_hover2.positions = point_pick_hover.positions
+            point_pick_hover2.time_from_start.sec = 2        # this was 2
+            point_pick_hover2.time_from_start.nanosec = 0
+
+            # Place-Movement
+
+            # Position_place_hover + Gripper OPEN
+            point_place_hover = JointTrajectoryPoint()
+            point_place_hover.positions = current_trj["place_hover"]
+            point_place_hover.time_from_start.sec = travel_time_s     # this was without -2 seconds
+            point_place_hover.time_from_start.nanosec = travel_time_ns
+
+            # Position_place + Gripper OPEN
+            point_place = JointTrajectoryPoint()
+            point_place.positions = current_trj["place_down"]
+            point_place.time_from_start.sec = 3        # this was 4
+            point_place.time_from_start.nanosec = 0
+
+            # Back to home position + Gripper OPEN
+            point_home2 = JointTrajectoryPoint()
+            point_home2.positions = point_home.positions
+            point_home2.time_from_start.sec = 8        # this was 8
+            point_home2.time_from_start.nanosec = 0
+
+            # ***** End of trajectory points
+
+
+
+            #****************** Trajectory START ***********************************************
+            
+            #self.get_logger().info('Waiting for the /go signal !!!!!!----------------------------------------')
+
+            # the "go" class variable is set to True here, go time!
+            #if self.go:
+
+            # Publish the trajectory
+            self.get_logger().info('Published trajectory.----------------------------------------')
+
+            # Add the trajectory points to the trajectory message
+            trajectory_msg.points.append(point_home)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to home & sleeping for 6 seconds\n")
+            for i in range(6):
+                print("Sleeping for %d out of 6 seconds" % int(i+1))
+                sleep(1)
+
+            # print(" -----------> Want to go to pick hover\n")
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_pick_hover)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to pick hover & sleeping for 8 seconds\n")
+            for i in range(8):
+                print("Sleeping for %d out of 8 seconds" % int(i+1))
+                sleep(1)
+
+
+            self.get_logger().info(" -----------> No image and sleeping for %.3f seconds\n" % pick_hover_wait_time)
+            sleep(pick_hover_wait_time)
+
+
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_pick)
+            # print(" -----------> Going to point pick\n")
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to point pick & sleeping for 2 seconds\n")
+            for i in range(2):
+                print("Sleeping for %d out of 2 seconds" % int(i+1))
+                sleep(1)
+
+
+            # Gripper closed
+            self.close_gripper()
+            sleep(3)
+
+
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_pick_hover2)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to pick hover 2 & sleeping for 2 seconds\n")
+            for i in range(2):
+                print("Sleeping for %d out of 2 seconds" % int(i+1))
+                sleep(1)
+
+
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_place_hover)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to place hover 2 & sleeping for %.3f seconds\n" % travel_time)
+            sleep(travel_time)
+
+
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_place)
+            self.publish_with_checking(trajectory_msg)
+            self.get_logger().info(" -----------> Going to point place & sleeping for 4 seconds\n")
+            for i in range(4):
+                print("Sleeping for %d out of 4 seconds" % int(i+1))
+                sleep(1)
+
+
+            #Gripper OPEN
+            self.open_gripper()
+            sleep(3)
+
+
+            trajectory_msg.points.clear()
+            trajectory_msg.points.append(point_home2)
+            self.publish_with_checking(trajectory_msg)
+            # sleep(8)
+
+
+            with open('logging.csv', 'w+', newline='') as file:
+                fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                self.get_logger().info('******************* CSV WRITER')
+
+                writer.writeheader()
+                writer.writerow({'participant': participant, 'modality': modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
+                file.close()
+
+
 
 
 
@@ -386,9 +561,11 @@ def main(args=None):
     
     sleep(3)
     # Iterative interface
-    for box_id in range(current_box,max_number_of_boxes):
+    for box_id in range(current_box, max_number_of_boxes):
+
         trajectory_publisher.get_logger().info("*****CURRENT BOX: #%d "% box_id)
         signal = str(input("Current target is box #%d. Enter 'g' to start: " % box_id))
+
         if signal == 'g':
             print("running the publish_trajectory function now!")
             trajectory_publisher.publish_trajectory()
