@@ -128,8 +128,8 @@ max_number_of_boxes = len(tjs_list)
 
 
 # three uncertainty conditions
-uncertainties_low = [8,12,14,7,7,5,9,46,45]  # this is size 10
-uncertainties_high = [71,98,75,62,96,83,22,52,46,45]
+uncertainties_low = [8,6,14,46,7,5,9,45,4,2]  # this is size 10
+uncertainties_high = [71,98,75,46,62,96,45,83,52]
 uncertainties_no = [0,0,0,0,0,0,0,0,0,0]
 
 

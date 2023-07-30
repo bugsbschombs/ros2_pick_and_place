@@ -27,16 +27,16 @@ class ImagePublisher(Node):
         if self.image_flag == -1:
             # publish default image via app
             img_msg = String()
-            img_msg.data = "image.png"
+            img_msg.data = "image.jpg"
             self.publisher_.publish(img_msg)
-            self.get_logger().info(" -----------> Publishing (default) image.png \n")
+            self.get_logger().info(" -----------> Publishing (default) image.jpg \n")
 
         else : 
             # publish image via app
             img_msg = String()
             img_msg.data = "image_"+str(self.image_flag)+".jpg"
             self.publisher_.publish(img_msg)
-            self.get_logger().info(" -----------> Publishing image2.jpg \n")
+            self.get_logger().info(" -----------> Publishing image \n")
         
 
     def flag_callback(self, msg):
