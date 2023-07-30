@@ -101,13 +101,12 @@ def generate_launch_description():
            output='screen',
         ),
 
-        # Node(
-        #    package='controller_manager',
-        #    executable='spawner',
-        #    arguments=['joint_trajectory_controller'],  
-        #    output='screen',
-        #    on_exit=Shutdown(),
-        # ),
+        Node(
+            package='controller_manager',
+            executable='spawner',
+            arguments=['joint_trajectory_controller'],  
+            output='screen',
+         ),
 
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([PathJoinSubstitution(

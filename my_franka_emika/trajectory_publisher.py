@@ -28,42 +28,103 @@ upper_joint_limits = [2.8973, 1.7628, 2.8973, -0.0698, 2.8973, 3.7525, 2.8973]
 
 TJ1 = {
     "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
-    "pick_hover":[0.6191161206069351, 0.11535040303879421, 0.29176843486431625, -2.760951557291725, -0.06332150335983494, 2.876210502854921, 1.7005373581461278], 
-    "pick_down": [0.6186313850198274, 0.1966324138157788, 0.28716365400953653, -2.7323819016434348, -0.06331137736057235, 2.878978080529004, 1.7271250506319373], 
+    "pick_hover":[0.692855558167406, -0.031825485408802444, 0.2645964320684744, -2.791755121867545, 0.03278677458583874, 2.759731178275691, 1.6749953547651055], 
+    "pick_down": [0.6955110798740082, 0.17227346213413142, 0.2357867527342614, -2.7575197029709217, 0.03327169493965579, 2.9047469232848497, 1.6688220709581738], 
+    "pick_hover":[0.692855558167406, -0.031825485408802444, 0.2645964320684744, -2.791755121867545, 0.03278677458583874, 2.759731178275691, 1.6749953547651055],
     "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
     "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
     }
 
 TJ2 = {
     "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
-    "pick_hover":[1.143925462212845, 0.25456577871684344, -0.08455514472767665, -2.498816061365435, 0.1240341158289152, 2.711423718852644, 1.6688574490720223], 
-    "pick_down": [1.1429359630140592, 0.31533354342667114, -0.07711123790758476, -2.4957345909899638, 0.12511514631932996, 2.772761021464163, 1.669696282985132], 
+    "pick_hover":[0.786713804839311, 0.19385285552931764, 0.27632609641172406, -2.4826266474702576, -0.036695691829446056, 2.643415397996074, 1.8473523196316204], 
+    "pick_down": [0.7913833179469447, 0.34291284116867377, 0.250890697335531, -2.440987002315242, -0.03670663859436242, 2.720697628938791, 1.8184151395863586], 
+    "pick_hover":[0.786713804839311, 0.19385285552931764, 0.27632609641172406, -2.4826266474702576, -0.036695691829446056, 2.643415397996074, 1.8473523196316204], 
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+TJ3 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.8008699109039782, 0.07301470155106025, 0.026954735334214483, -2.655276026699324, -0.041939082666088486, 2.726736576555586, 1.6379421249619202], 
+    "pick_down": [0.8008173027038632, 0.24097551183062382, 0.025758841439122927, -2.6174289258110504, -0.041942447244985526, 2.8318295350053897, 1.626246827201089], 
+    "pick_hover":[0.8008699109039782, 0.07301470155106025, 0.026954735334214483, -2.655276026699324, -0.041939082666088486, 2.726736576555586, 1.6379421249619202],
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+TJ4 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.829002895295599, 0.2518092767357725, 0.13408721889798145, -2.3776301009244336, -0.039981570836241764, 2.6113081684118105, 1.7782435037163862], 
+    "pick_down": [0.8363393160753297, 0.3886204716534108, 0.12024573014869352, -2.3559177551018515, -0.040619071033295914, 2.7195453900993947, 1.7545289841578797], 
+    "pick_hover":[0.829002895295599, 0.2518092767357725, 0.13408721889798145, -2.3776301009244336, -0.039981570836241764, 2.6113081684118105, 1.7782435037163862], 
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+TJ5 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.8664263468424315, 0.1324476047950334, -0.13192654373862173, -2.536809741150129, -0.03483336699011202, 2.7039187629360866, 1.5466355307527875], 
+    "pick_down": [0.870959021772894, 0.30553792865355234, -0.12554749682332803, -2.523319232865486, -0.034826015564199585, 2.8565273193317613, 1.5425674678162118], 
+    "pick_hover":[0.8664263468424315, 0.1324476047950334, -0.13192654373862173, -2.536809741150129, -0.03483336699011202, 2.7039187629360866, 1.5466355307527875], 
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+TJ6 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.8284068694484286, 0.31563376307109886, 0.05054645114218371, -2.2613523910264783, -0.027917037379968607, 2.5642111977616087, 1.6739232945967575], 
+    "pick_down": [0.8346349560062076, 0.44392968907984465, 0.037647485805243824, -2.2216185951215706, -0.033306573059047814, 2.6380558731080876, 1.6670963135253924], 
+    "pick_hover":[0.8284068694484286, 0.31563376307109886, 0.05054645114218371, -2.2613523910264783, -0.027917037379968607, 2.5642111977616087, 1.6739232945967575], 
     "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
     "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
     }
 
 
-# tjs_list =  [TJ1, TJ2, TJ3, TJ4, TJ5, TJ6, TJ7, TJ8, TJ9, TJ10]
-tjs_list =  [TJ1, TJ2]
+TJ7 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.8295166602353828, 0.2502591169728821, -0.17074352631019443, -2.381098331011856, -0.012211921982277807, 2.6721870553378073, 1.486887120995305], 
+    "pick_down": [0.8295193076605679, 0.39651625436988863, -0.16341982653004256, -2.3781028330446343, -0.012190060595786562, 2.84470178893632, 1.458873316848614], 
+    "pick_hover":[0.8295166602353828, 0.2502591169728821, -0.17074352631019443, -2.381098331011856, -0.012211921982277807, 2.6721870553378073, 1.486887120995305], 
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+TJ8 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.6316659289942639, 0.42822201133685955, 0.16342496168045237, -2.060195135090972, -0.1030481092367054, 2.439635359735207, 1.6101745882778866], 
+    "pick_down": [0.6319427701761905, 0.539014475524197, 0.1560667329671316, -2.057520155767496, -0.10301112312350642, 2.5420407516930483, 1.5880923778194715], 
+    "pick_hover":[0.6316659289942639, 0.42822201133685955, 0.16342496168045237, -2.060195135090972, -0.1030481092367054, 2.439635359735207, 1.6101745882778866], 
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+TJ9 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.6293224911107395, 0.36018139518444764, -0.044389919138178247, -2.1856469310395608, 0.018919492226506227, 2.5715949417950505, 1.3934300874766954], 
+    "pick_down": [0.6320421473786435, 0.48872565800790274, -0.04491327985640215, -2.16968699281308, 0.018907493837867415, 2.6858445008803455, 1.3449440696506774], 
+    "pick_hover":[0.6293224911107395, 0.36018139518444764, -0.044389919138178247, -2.1856469310395608, 0.018919492226506227, 2.5715949417950505, 1.3934300874766954],
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+TJ10 = {
+    "home":[0.48367694844501913, -0.3030616318398186, -0.5229186330040432, -2.3766162168751475, -0.18668388709686684, 2.0748756006017803, 0.8758746603421096], 
+    "pick_hover":[0.8007202372847209, 0.5095106127165671, -0.08217522296621782, -1.9338736469883688, 0.016744317705654415, 2.4531447425674693, 1.5324661656092409], 
+    "pick_down": [0.8006017067810978, 0.6177665980460825, -0.07752797953347676, -1.9276800056137855, 0.016766618850804493, 2.571633566895307, 1.4836206438234918], 
+    "pick_hover":[0.8007202372847209, 0.5095106127165671, -0.08217522296621782, -1.9338736469883688, 0.016744317705654415, 2.4531447425674693, 1.5324661656092409], 
+    "place_hover": [-0.0737010309183906, 0.5348086683724749, -0.23783670820799785, -1.5686379855403472, 0.12078098163196738, 2.0961449675840016, 0.41571346794998365],
+    "place_down": [-0.0711010494361804, 0.7973276222806459, -0.20880710476954248, -1.5694039211525184, 0.14360818026794253, 2.3493687043093217, 0.43407348498047793]
+    }
+
+
+tjs_list =  [TJ1, TJ2, TJ3, TJ4, TJ5, TJ6, TJ7, TJ8, TJ9, TJ10]
 
 
 
 ###########################   Config 
-# participant  'P1' # Expected P1, P2  
-participant = 0
 
-# modality
-# modality = 'holder'
-
-# session
-session = 0
-
-# box ids
-current_box = 0
 max_number_of_boxes = len(tjs_list)
-
-# uncertainty level
-uncertaintylevel = 'no'
 
 
 # three uncertainty conditions
@@ -71,14 +132,7 @@ uncertainties_low = [8,12,14,7,7,5,9,46,45]  # this is size 10
 uncertainties_high = [71,98,75,62,96,83,22,52,46,45]
 uncertainties_no = [0,0,0,0,0,0,0,0,0,0]
 
-current_uncertainty_level = uncertainties_low
 
-
-
-
-
-#image dictionnary GUI
-img_dict = {"u10":"image2.jpg"}
 
 class TrajectoryPublisher(Node):
 
@@ -98,6 +152,22 @@ class TrajectoryPublisher(Node):
         self.publisher_app = self.create_publisher(Flag, 'image_flag', 4) 
 
         self.times = []
+        
+        self.participant = 0
+
+
+        # modality
+        self.modality = 'holder'
+
+        # session
+        self.session = 0
+
+        # box ids
+        self.starting_box = 0
+        
+        # uncertainty level
+        self.uncertaintylevel = 'no'
+        self.current_uncertainty_level = uncertainties_low
 
 
 
@@ -107,21 +177,26 @@ class TrajectoryPublisher(Node):
         current_config = msg
         
         #config current_box
-        current_box = current_config.box
-        uncertaintylevel = current_config.uncertaintylevel
-        if(uncertaintylevel == 'no'):
-            current_uncertainty_level = uncertainties_no
-        elif (uncertaintylevel == 'low'):
-            current_uncertainty_level = uncertainties_low
-        elif (uncertaintylevel == 'high'):
-            current_uncertainty_level = uncertainties_high
+        self.starting_box = current_config.box
+        print(current_config.box)
+
+        #config uncertaintylevel
+        self.uncertaintylevel = current_config.uncertaintylevel
+        if(self.uncertaintylevel == 'no'):
+            self.current_uncertainty_level = uncertainties_no
+        elif (self.uncertaintylevel == 'low'):
+            self.current_uncertainty_level = uncertainties_low
+        elif (self.uncertaintylevel == 'high'):
+            self.current_uncertainty_level = uncertainties_high
 
 
         ### particpant
-
+        self.participant = current_config.participant
 
 
         ### session
+        self.participant = current_config.participant
+
 
         ### modality
         print(type(current_config.modality))
@@ -132,16 +207,16 @@ class TrajectoryPublisher(Node):
 
 
 
-        with open('logging.csv', 'w+', newline='') as file:
-            fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            self.get_logger().info('******************* CSV WRITER')
+        # with open('logging.csv', 'w+', newline='') as file:
+        #     fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
+        #     writer = csv.DictWriter(file, fieldnames=fieldnames)
+        #     self.get_logger().info('******************* CSV WRITER')
 
-            writer.writeheader()
-            writer.writerow({'participant': participant, 'modality': self.modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
-            file.close()
+        #     writer.writeheader()
+        #     writer.writerow({'participant': participant, 'modality': self.modality, 'session': session, 'box': starting_box, "uncertaintylevel":uncertaintylevel})
+        #     file.close()
 
-        return
+        # return
 
 
 
@@ -209,12 +284,12 @@ class TrajectoryPublisher(Node):
 
 
     ######################################## THE IMPORTANT FUNCTION RIGHT HERE ########################################
-    def publish_trajectory(self):
+    def publish_trajectory(self, box_id):
         
         # get the current config 
-        current_trj = tjs_list[current_box]
-        un = current_uncertainty_level[current_box]
-        image_flag = 1
+        current_trj = tjs_list[box_id-1]
+        un = self.current_uncertainty_level[box_id-1]
+        image_flag = un
 
         # get the wait times based on the uncertainty
         pick_hover_wait_time = self.get_wait_time(un)
@@ -234,6 +309,12 @@ class TrajectoryPublisher(Node):
         print("=" * 100)
         print("\n")
         print("The current modality is %s" % self.modality)
+        print("\n")
+        print("=" * 100)
+
+        print("=" * 100)
+        print("\n")
+        print("The current box is %s" % box_id)
         print("\n")
         print("=" * 100)
 
@@ -377,13 +458,11 @@ class TrajectoryPublisher(Node):
 
             # change the image flag
             flag_msg = Flag()
-            flag_msg.flag = 0       #### 0 = change image back to default
+            flag_msg.flag = -1       #### 0 = change image back to default
             # print(" -----------> Sending image \n")
             self.publisher_app.publish(flag_msg)
             self.get_logger().info(" -----------> Image stopped & sleeping for 8 seconds\n")
             # sleep(8)
-
-            
 
 
             trajectory_msg.points.clear()
@@ -392,13 +471,13 @@ class TrajectoryPublisher(Node):
             # sleep(1)
 
 
-            with open('logging.csv', 'w+', newline='') as file:
+            with open('logging_'+self.participant+'.csv', 'w+', newline='') as file:
                 fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 self.get_logger().info('******************* CSV WRITER')
 
                 writer.writeheader()
-                writer.writerow({'participant': participant, 'modality': self.modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
+                writer.writerow({'participant': self.participant, 'modality': self.modality, 'session': self.session, 'box': self.box_id, "uncertaintylevel":self.uncertaintylevel})
                 file.close()
 
 
@@ -540,13 +619,13 @@ class TrajectoryPublisher(Node):
             # sleep(8)
 
 
-            with open('logging.csv', 'w+', newline='') as file:
+            with open('logging_'+self.participant+'.csv', 'w+', newline='') as file:
                 fieldnames = ['participant', 'modality','session','box','uncertaintylevel']
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 self.get_logger().info('******************* CSV WRITER')
 
                 writer.writeheader()
-                writer.writerow({'participant': participant, 'modality': modality, 'session': session, 'box': current_box, "uncertaintylevel":uncertaintylevel})
+                writer.writerow({'participant': self.participant, 'modality': self.modality, 'session': self.session, 'box': self.box_id, "uncertaintylevel":self.uncertaintylevel})
                 file.close()
 
 
@@ -561,14 +640,14 @@ def main(args=None):
     
     sleep(3)
     # Iterative interface
-    for box_id in range(current_box, max_number_of_boxes):
+    for box_id in range(trajectory_publisher.starting_box, max_number_of_boxes):
 
         trajectory_publisher.get_logger().info("*****CURRENT BOX: #%d "% box_id)
         signal = str(input("Current target is box #%d. Enter 'g' to start: " % box_id))
 
         if signal == 'g':
             print("running the publish_trajectory function now!")
-            trajectory_publisher.publish_trajectory()
+            trajectory_publisher.publish_trajectory(box_id)
             print("Finished running for box_id #%d" % box_id)
 
 

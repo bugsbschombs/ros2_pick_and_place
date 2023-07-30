@@ -6,12 +6,6 @@ from std_msgs.msg import String
 
 
 
-#image dictionnary GUI
-img_dict = {
-    "default":"image.png",
-    "u10":"image2.jpg"
-}
-
 
 class ImagePublisher(Node):
 
@@ -30,27 +24,20 @@ class ImagePublisher(Node):
 
     def publish_callback(self):
         
-        if self.image_flag == 0:
+        if self.image_flag == -1:
             # publish default image via app
             img_msg = String()
-            img_msg.data = img_dict["default"]
+            img_msg.data = "image.png"
             self.publisher_.publish(img_msg)
             self.get_logger().info(" -----------> Publishing (default) image.png \n")
 
-        if self.image_flag == 1:
+        else : 
             # publish image via app
             img_msg = String()
-            img_msg.data = img_dict["u10"]
+            img_msg.data = "image_"+str(self.image_flag)+".jpg"
             self.publisher_.publish(img_msg)
             self.get_logger().info(" -----------> Publishing image2.jpg \n")
         
-        if self.image_flag == 2:
-            # publish image via app
-            img_msg = String()
-            img_msg.data = img_dict["u10"]
-            self.publisher_.publish(img_msg)
-            self.get_logger().info(" -----------> Publishing image2.jpg \n")
-
 
     def flag_callback(self, msg):
         
