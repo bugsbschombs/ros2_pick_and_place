@@ -19,7 +19,7 @@ class ImagePublisher(Node):
         self.subscription = self.create_subscription(Flag,'image_flag', self.flag_callback, 10)
         self.subscription
 
-        self.image_flag = 0
+        self.image_flag = -1 #0
 
 
     def publish_callback(self):

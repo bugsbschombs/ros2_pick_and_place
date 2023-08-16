@@ -137,15 +137,15 @@ class TrajectoryPublisher(Node):
 
 
     def get_wait_time(self, uncertainty):
-        a = 0.08
-        b = 2
+        a = 0.06
+        b = 0
         wait_time = a * uncertainty + b
         return wait_time
     
 
     def get_travel_time(self, uncertainty):
         a = 0.06
-        b = 8
+        b = 6
         wait_time = a * uncertainty + b
         return wait_time
         
